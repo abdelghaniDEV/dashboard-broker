@@ -1,7 +1,6 @@
-import ListLeads from "@/components/ListLeads";
 import ListUsers from "@/components/ListUsers";
 import { Button } from "@/components/ui/button";
-import { Boxes, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import Link from "next/link";
 import React, { Suspense } from "react";
 

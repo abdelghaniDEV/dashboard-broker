@@ -32,13 +32,13 @@ export type userCartProps = {
 };
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default function UserCart({ user, index, setRefresh }: userCartProps) {
+export default function UserCart({ user, setRefresh }: userCartProps) {
   const [open, setOpen] = useState(false);
 
   const handleDelete = async () => {
     // delete user from
     try {
-      const response = await axios.delete(`${apiUrl}/users/${user._id}`);
+       await axios.delete(`${apiUrl}/users/${user._id}`);
       console.log("deleted user successfully");
       setRefresh((prev) => !prev);
       setOpen(false);

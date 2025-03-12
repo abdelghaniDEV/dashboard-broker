@@ -31,13 +31,13 @@ export type leadCartProps = {
 };
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default function LeadCart({ lead, index , setRefresh }: leadCartProps) {
+export default function LeadCart({ lead , setRefresh }: leadCartProps) {
   const [open, setOpen] = useState(false);
 
   const handleDelete = async () => {
     // delete lead from
     try {
-      const response = await axios.delete(`${apiUrl}/leads/${lead._id}`);
+       await axios.delete(`${apiUrl}/leads/${lead._id}`);
       console.log("deleted lead successfully");
       setRefresh((prev) => !prev)
       setOpen(false);

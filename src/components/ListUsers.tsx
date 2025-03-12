@@ -42,6 +42,7 @@ export default function ListUsers() {
           params: { page, limit },
         });
 
+        console.log(loading)
         console.log(response.data);
         setusers(response.data.users);
         setTotalPages(response.data.totalPages);

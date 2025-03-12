@@ -5,10 +5,9 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
-import { error } from "console";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 export type dataLead = {
   fullName: string;
@@ -20,7 +19,7 @@ export type dataLead = {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default function page() {
+export default function CreateLead() {
   const [data, setData] = useState<dataLead>({
     fullName: "",
     email: "",

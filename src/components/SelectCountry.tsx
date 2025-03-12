@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/select";
 import { Label } from "./ui/label";
 import Image from "next/image";
-import { dataLead } from "@/app/admin/leads/create-lead/page";
 
 type country = {
   name: string;

@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Input } from "./ui/input";
 import { Bell, Menu, Search } from "lucide-react";
 
-type headerProps = {
-  setShowSidebar: (show: boolean) => void;
-};
+// type headerProps = {
+//   setShowSidebar: (show: boolean) => void;
+// };
 
 export default function Header() {
   return (

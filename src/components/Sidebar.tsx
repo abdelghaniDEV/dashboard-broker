@@ -6,10 +6,10 @@ import { Users } from "lucide-react";
 import logo from "../assets/Al-Ansari-Exchange-Logo.png";
 import Image from "next/image";
 
-type SidebarProps = {
-  showSidebar: boolean;
-  setShowSidebar: (value: boolean) => void;
-};
+// type SidebarProps = {
+//   showSidebar: boolean;
+//   setShowSidebar: (value: boolean) => void;
+// };
 
 export default function Sidebar() {
   const [showSidebar, setShowSidebar] = React.useState(false);

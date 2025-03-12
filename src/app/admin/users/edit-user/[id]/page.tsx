@@ -9,16 +9,15 @@ import axios from "axios";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import SelectCountry from "@/components/SelectCountry";
 
-interface User {
-  id: number;
-  email: string;
-  password: string;
-  fullName: string;
-  phone: string;
-  balance: string;
-}
+// interface User {
+//   id: number;
+//   email: string;
+//   password: string;
+//   fullName: string;
+//   phone: string;
+//   balance: string;
+// }
 
 export default function EditUser() {
   const { id } = useParams();
@@ -57,7 +56,7 @@ export default function EditUser() {
       }
     };
     if (id) fetchUser();
-  }, [id]);
+  }, [id , apiUrl]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

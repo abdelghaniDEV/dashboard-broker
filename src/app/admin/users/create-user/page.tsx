@@ -123,7 +123,7 @@ export default function CreateUser() {
     console.log("country",country)
   },[country])
 
-  const handelSubmit = async (e: any) => {
+  const handelSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Registering user...");

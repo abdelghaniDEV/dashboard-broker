@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -12,10 +11,7 @@ import {
 import axios from "axios";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { EllipsisIcon, Eye, Trash } from "lucide-react";
-import Link from "next/link";
-import { Button } from "./ui/button";
-import LeadCart, { leadCartProps, leadType } from "./LeadCart";
+import LeadCart, { leadType } from "./LeadCart";
 import Pagination from "./Pagination";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -27,7 +23,7 @@ export default function ListLeads() {
   const [page, setPage] = useState(searchParams.get("page") || "1");
   const [refresh , setRefresh] = useState(false)
   const [totalPages , setTotalPages] = useState(0)
-  const [carentPage , setParentPage] = useState(0)
+  const [carentPage , setCarentPage] = useState(0)
 
   const router = useRouter();
 
@@ -45,9 +41,12 @@ export default function ListLeads() {
           params: { page, limit },
         });
 
+        setCarentPage(response.data.totalPages)
+        console.log(loading)
         console.log(response.data);
         setLeads(response.data.leads);
         setTotalPages(response.data.totalPages);
+        
         setLoading(false);
       } catch (err) {
         console.error(err);
