@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-export function middleware(req: any) {
+export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Middleware 1: إعادة توجيه من `/` إلى `/dashboard`
@@ -8,7 +8,7 @@ export function middleware(req: any) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Middleware 2: حماية المسارات التي تبدأ بـ `/d/:path*`
+  // Middleware 2: حماية المسارات التي تبدأ بـ `/admin/:path*`
   if (pathname.startsWith("/admin")) {
     const token = req.cookies.get("token-001")?.value;
 
@@ -23,5 +23,5 @@ export function middleware(req: any) {
 }
 
 export const config = {
-  matcher: ["/", "/s/:path*"], // تطبيق Middleware على `/` و `/d/:path*`
+  matcher: ["/", "/admin/:path*"], // تطبيق Middleware على `/` و `/admin/:path*`
 };
