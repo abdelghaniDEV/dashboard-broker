@@ -1,20 +1,22 @@
 "use client";
+import { getCookie } from "@/components/ListLeads";
 import SelectCountry from "@/components/SelectCountry";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 export type dataLead = {
   fullName: string;
   email: string;
   phone: string;
   country: string;
-  balanes?: string
+  balanes?: string;
 };
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -33,7 +35,9 @@ export default function CreateLead() {
     country: "",
   });
 
-  const [country , setCountry] = useState<string>('')
+  const [errorServer , setErrorServer] = useState('')
+
+  const [country, setCountry] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -75,23 +79,35 @@ export default function CreateLead() {
     return isValid;
   };
 
+  useEffect(() => {
+    setData({ ...data, country: country });
+  }, [country]);
+
   const handelSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (checkData()) {
       // Send form data to server
       try {
-        setData({...data, country: country }); // Set initial balance to 0
-        const response = await axios.post(`${apiUrl}/leads`, data);
+        const token = getCookie("token-001");
+        // Set initial balance to 0
+        const response = await axios.post(`${apiUrl}/leads`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log("Form submitted successfully", response);
+        toast.success("Lead created successfully");
       } catch (e) {
         console.error("Error sending form data", e);
+        
       }
     }
   };
 
   return (
     <div>
-      <div className=" lg:flex justify-between items-center mb-4 ">
+      <ToastContainer />
+      <div className=" flex justify-between items-center mb-4 ">
         <div className="flex items-start gap-1 md:gap-2 pb-3 lg:pb-0 ">
           <Link href={"/admin/leads"} className="border p-2 md:p-3  ">
             <ArrowLeft className="h-8 w-8" />
@@ -103,15 +119,11 @@ export default function CreateLead() {
             </h1>
           </div>
         </div>
-        <div className="flex justify-end gap-5">
-          <Button>
-            <span>Create Lead</span>
-          </Button>
-        </div>
+       
       </div>
-      <div className="py-6">
+      <div className=" md:py-6">
         <Card className="flex flex-col gap-5 p-4">
-          <form onSubmit={handelSubmit} className="flex flex-col gap-5 p-4">
+          <form onSubmit={handelSubmit} className="flex flex-col gap-5 p-4 relative">
             <div className="flex flex-col gap-2 relative">
               <Label>
                 Full Name <span className="text-red-500">*</span>
@@ -178,6 +190,11 @@ export default function CreateLead() {
             <Button type="submit" className=" cursor-pointer">
               Create Lead
             </Button>
+            {errorServer && (
+              <p className="text-[12px] text-red-500 absolute bottom-[-18px]">
+                {errorServer}
+              </p>
+            )}
           </form>
 
           {/* Address */}

@@ -6,13 +6,11 @@ import { Users } from "lucide-react";
 import logo from "../assets/Al-Ansari-Exchange-Logo.png";
 import Image from "next/image";
 
-// type SidebarProps = {
-//   showSidebar: boolean;
-//   setShowSidebar: (value: boolean) => void;
-// };
-
-export default function Sidebar() {
-  const [showSidebar, setShowSidebar] = React.useState(false);
+type SidebarProps = {
+  showSidebar: boolean;
+  setShowSidebar: (value: boolean) => void;
+}
+export default function Sidebar({showSidebar , setShowSidebar} : SidebarProps) {
 
   return (
     <div
@@ -22,18 +20,18 @@ export default function Sidebar() {
     >
       <div>
         <div
-          className="flex items-center justify-between px-2 lg:hidden py-3 text-gray-800"
+          className="flex items-center justify-between px-2 lg:hidden py-3 text-white"
           onClick={() => setShowSidebar(false)}
         >
           <X />
         </div>
         {/* Sidebar content */}
-        <div className="pb-5 flex items-center justify-center">
+        <div className="pb-5 flex items-center justify-center" onClick={() => setShowSidebar(false)}>
           <Image src={logo} alt="logo" unoptimized className="w-[200px]" />
         </div>
 
         <nav>
-          <ul className="flex flex-col gap-7">
+          <ul className="flex flex-col gap-7" onClick={() => setShowSidebar(false)}>
             <Link href={"/admin/users"} className="flex gap-3 items-center">
               <Users />
               <span>Users</span>

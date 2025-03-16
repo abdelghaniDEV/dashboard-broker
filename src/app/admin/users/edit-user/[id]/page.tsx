@@ -9,15 +9,8 @@ import axios from "axios";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Card } from "@/components/ui/card";
-
-// interface User {
-//   id: number;
-//   email: string;
-//   password: string;
-//   fullName: string;
-//   phone: string;
-//   balance: string;
-// }
+import { getCookie } from "@/components/ListLeads";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function EditUser() {
   const { id } = useParams();
@@ -39,10 +32,16 @@ export default function EditUser() {
   const [loading, setLoading] = useState(false);
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  const token = getCookie('token-001');
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/users/${id}`);
+        
+        const response = await axios.get(`${apiUrl}/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}` 
+          }
+        });
         console.log(response);
         setData({
           email: response.data.user.email,
@@ -126,20 +125,25 @@ export default function EditUser() {
       try {
         setLoading(true);
         await axios.put(`${apiUrl}/users/${id}`, data, {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}` 
+          }
         });
         setLoading(false);
         console.log("success");
+        toast.success("User updated successfully");
       } catch (error) {
         setLoading(false);
         console.error("Failed to update user", error);
+        toast.error("Failed to update user");
       }
     }
   };
 
   return (
     <div>
-      <div className=" lg:flex justify-between items-center mb-4 ">
+      <ToastContainer />
+      <div className=" flex justify-between items-center mb-4 ">
         <div className="flex items-start gap-1 md:gap-2 pb-3 lg:pb-0 ">
           <Link href={"/admin/users"} className="border p-2 md:p-3  ">
             <ArrowLeft className="h-8 w-8" />
@@ -151,11 +155,11 @@ export default function EditUser() {
             </h1>
           </div>
         </div>
-        <div className="flex justify-end gap-5">
+        {/* <div className="flex justify-end gap-5">
           <Button>
             <span>Edit Lead</span>
           </Button>
-        </div>
+        </div> */}
       </div>
       <Card className="p-4">
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

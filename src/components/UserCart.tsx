@@ -54,10 +54,10 @@ export default function UserCart({ user, setRefresh }: userCartProps) {
       <TableRow key={user._id}>
         {/* <TableCell>#{index + 1}</TableCell> */}
         <TableCell className="ca capitalize">{user.fullName}</TableCell>
-        <TableCell>{user.email}</TableCell>
-        <TableCell>{user.phone}</TableCell>
+        <TableCell className="hidden md:table-cell">{user.email}</TableCell>
+        <TableCell className="hidden lg:table-cell">{user.phone}</TableCell>
         <TableCell>{user.country}</TableCell>
-        <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+        <TableCell className="hidden lg:table-cell">{new Date(user.createdAt).toLocaleDateString()}</TableCell>
         <TableCell className=" font-[600] ">{user.balance}$</TableCell>
 
         <TableCell className="item items-center">

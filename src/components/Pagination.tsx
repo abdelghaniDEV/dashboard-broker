@@ -33,7 +33,7 @@ const Pagination = ({
             type="button"
             className={`px-3 py-1 border ${
               currentPage === page
-                ? "bg-main-primary text-black"
+                ? " text-black"
                 : "bg-white text-black"
             }`}
           >

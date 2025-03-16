@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import SelectCountry from "@/components/SelectCountry";
+import { getCookie } from "@/components/ListLeads";
 
 export type regesterData = {
   email: string;
@@ -130,14 +131,18 @@ export default function CreateUser() {
       console.log("Data before sending:", data);
   
       try {
+        const token = getCookie('token-001');
         const response = await axios.post(
           `${apiUrl}/auth/register`,
           { ...data, country }, // دمج `country` مع البيانات قبل الإرسال
           {
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              Authorization: `Bearer ${token}` 
+            }
           }
         );
   
+        toast.success("Product successfully added");
         if (response.status === 201 || response.status === 200) {
           console.log("User registered successfully:", response.data);
         } else {
@@ -145,6 +150,9 @@ export default function CreateUser() {
         }
       } catch (error) {
         console.error("Failed to register user", error);
+        if(error.response.data.message) {
+          toast.error(error.response.data.message);
+        }
       }
     }
   };
@@ -152,7 +160,8 @@ export default function CreateUser() {
 
   return (
     <div className="">
-      <div className=" lg:flex justify-between items-center mb-4 ">
+      <ToastContainer /> 
+      <div className=" flex justify-between items-center mb-4 ">
         <div className="flex items-start gap-1 md:gap-2 pb-3 lg:pb-0 ">
           <Link href={"/admin/users"} className="border p-2 md:p-3  ">
             <ArrowLeft className="h-8 w-8" />
@@ -164,11 +173,11 @@ export default function CreateUser() {
             </h1>
           </div>
         </div>
-        <div className="flex justify-end gap-5">
+        {/* <div className="flex justify-end gap-5">
           <Button>
             <span>Create Lead</span>
           </Button>
-        </div>
+        </div> */}
       </div>
       <div className="">
         <Card className=" p-4 relative overflow-hidden">
@@ -196,6 +205,7 @@ export default function CreateUser() {
                 <Input
                   type="Number"
                   name="balance"
+                  step="any"
                   placeholder="0.00 $"
                   onChange={handleInputChange}
                   className={`${

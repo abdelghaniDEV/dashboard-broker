@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import { LeadStatus } from "./LeadStatus";
+import { getCookie } from "./ListLeads";
 
 export type leadType = {
     _id: string;
@@ -37,7 +38,11 @@ export default function LeadCart({ lead , setRefresh }: leadCartProps) {
   const handleDelete = async () => {
     // delete lead from
     try {
-       await axios.delete(`${apiUrl}/leads/${lead._id}`);
+      const token = getCookie("token-001")
+       await axios.delete(`${apiUrl}/leads/${lead._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+ 
+       });
       console.log("deleted lead successfully");
       setRefresh((prev) => !prev)
       setOpen(false);
@@ -53,11 +58,11 @@ export default function LeadCart({ lead , setRefresh }: leadCartProps) {
       <TableRow key={lead._id}>
         {/* <TableCell>#{index + 1}</TableCell> */}
         <TableCell className="ca capitalize">{lead.fullName}</TableCell>
-        <TableCell>{lead.email}</TableCell>
+        <TableCell className="hidden md:table-cell">{lead.email}</TableCell>
         <TableCell>{lead.phone}</TableCell>
         <TableCell>{lead.country}</TableCell>
-        <TableCell>{new Date(lead.createdAt).toLocaleDateString()}</TableCell>
-        <TableCell className="">
+        <TableCell className="hidden xl:table-cell">{new Date(lead.createdAt).toLocaleDateString()}</TableCell>
+        <TableCell className="hidden md:table-cell">
             <LeadStatus status={lead.status} leadID={lead._id} setRefresh={setRefresh} />
         </TableCell>
 
@@ -68,11 +73,11 @@ export default function LeadCart({ lead , setRefresh }: leadCartProps) {
               onClick={() => setOpen(true)}
             >
               <Trash />
-              <span>Delete</span>
+              <span className="hidden xl:block">Delete</span>
             </Button>
             <Button className="flex items-center gap-1 bg-[#94C0FF] text-[#0167F6]">
               <Eye />
-              <span>View</span>
+              <span className="hidden xl:block">View</span>
             </Button>
           </div>
         </TableCell>

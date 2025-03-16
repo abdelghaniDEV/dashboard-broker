@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
+import { getCookie } from "./ListLeads";
 
 const statusColors: Record<string, string> = {
   New: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
@@ -31,9 +32,14 @@ export const LeadStatus = ({
 
   const handelChangeStatus = async (statusTarget: string) => {
     try {
+      const token = getCookie("token-001")
       const response = await axios.put(
         `${apiUrl}/leads/${leadID}/status`,
-        { status: statusTarget }
+        { status: statusTarget }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("change status success", response);
       setRefresh((prev) => !prev);
