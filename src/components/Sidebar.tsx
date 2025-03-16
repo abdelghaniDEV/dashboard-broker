@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Boxes, User, X } from "lucide-react";
+import { Boxes, X } from "lucide-react";
 import Link from "next/link";
 import { Users } from "lucide-react";
 import logo from "../assets/Al-Ansari-Exchange-Logo.png";
@@ -40,13 +40,13 @@ export default function Sidebar({showSidebar , setShowSidebar} : SidebarProps) {
               <Boxes />
               <span>Leads</span>
             </Link>
-            <Link
+            {/* <Link
               href={"/admin/categories"}
               className="flex gap-3 items-center"
             >
               <User />
               <span>Profile</span>
-            </Link>
+            </Link> */}
           </ul>
         </nav>
       </div>
