@@ -35,7 +35,7 @@ export default function CreateLead() {
     country: "",
   });
 
-  const [errorServer , setErrorServer] = useState('')
+  // const [errorServer , setErrorServer] = useState('')
 
   const [country, setCountry] = useState<string>("");
 
@@ -190,11 +190,11 @@ export default function CreateLead() {
             <Button type="submit" className=" cursor-pointer">
               Create Lead
             </Button>
-            {errorServer && (
+            {/* {errorServer && (
               <p className="text-[12px] text-red-500 absolute bottom-[-18px]">
                 {errorServer}
               </p>
-            )}
+            )} */}
           </form>
 
           {/* Address */}

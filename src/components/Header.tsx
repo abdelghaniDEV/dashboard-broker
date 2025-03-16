@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { Input } from "./ui/input";
-import { Bell, Menu, Search } from "lucide-react";
+import { Menu } from "lucide-react";
 
 type headerProps = {
   setShowSidebar: (show: boolean) => void;
