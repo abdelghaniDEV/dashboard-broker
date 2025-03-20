@@ -53,6 +53,11 @@ export default function ListLeads() {
   const [carentPage, setCarentPage] = useState(0);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("all"); //
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const router = useRouter();
 
@@ -63,7 +68,7 @@ export default function ListLeads() {
   }, [page, router]);
 
   useEffect(() => {
-    console.log("status",status)
+    console.log("status", status);
     const fetchLeads = async () => {
       try {
         setLoading(true);
@@ -90,8 +95,13 @@ export default function ListLeads() {
     fetchLeads();
   }, [page, refresh, search, status]);
 
-  const statusOptions = ["new", "interested", "fullInformation", "noInformation"];
-  const profile = useSelector((state : RootState) => state.profile)
+  const statusOptions = [
+    "new",
+    "interested",
+    "fullInformation",
+    "noInformation",
+  ];
+  const profile = useSelector((state: RootState) => state.profile);
 
   return (
     <div>
@@ -121,7 +131,13 @@ export default function ListLeads() {
             <DropdownMenuContent>
               <DropdownMenuLabel>Status</DropdownMenuLabel>
               <DropdownMenuSeparator />
-
+              <DropdownMenuItem onClick={() => setStatus("all")}>
+                <div
+                  className={`flex cursor-pointer capitalize w-full items-center justify-center gap-1 border-[1px]   py-[6px] px-[2px] rounded-[6px]`}
+                >
+                  <span className=" text-[13px] font-[600]">all</span>
+                </div>
+              </DropdownMenuItem>
               {statusOptions.map((status) => {
                 return (
                   <DropdownMenuItem
@@ -149,9 +165,16 @@ export default function ListLeads() {
               <TableHead className="hidden md:table-cell">Email</TableHead>
               <TableHead className="">Phone</TableHead>
               <TableHead>Country</TableHead>
-              <TableHead className="hidden xl:table-cell"> Created_at</TableHead>
+              <TableHead className="hidden xl:table-cell">
+                {" "}
+                Created_at
+              </TableHead>
               <TableHead className="hidden md:table-cell">Status</TableHead>
-              {profile.role === "superAdmin" && <TableHead className="hidden md:table-cell">Sales Man</TableHead>}
+              {isClient && profile.role === "superAdmin" && (
+                <TableHead className="hidden md:table-cell">
+                  Sales Man
+                </TableHead>
+              )}
               <TableHead className="">Action</TableHead>
             </TableRow>
           </TableHeader>
