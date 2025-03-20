@@ -1,16 +1,27 @@
 "use client";
 import React from "react";
-import { Boxes, X } from "lucide-react";
+import { Boxes, ShieldUser, X } from "lucide-react";
 import Link from "next/link";
 import { Users } from "lucide-react";
 import logo from "../assets/Al-Ansari-Exchange-Logo.png";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 type SidebarProps = {
   showSidebar: boolean;
   setShowSidebar: (value: boolean) => void;
-}
-export default function Sidebar({showSidebar , setShowSidebar} : SidebarProps) {
+};
+export default function Sidebar({ showSidebar, setShowSidebar }: SidebarProps) {
+  const router = useRouter();
+
+  const handelLogout = () => {
+    document.cookie = "token-001=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    router.push("/login");
+  };
+
+  const profile = useSelector((state : RootState) => state.profile)
 
   return (
     <div
@@ -26,20 +37,38 @@ export default function Sidebar({showSidebar , setShowSidebar} : SidebarProps) {
           <X />
         </div>
         {/* Sidebar content */}
-        <div className="pb-5 flex items-center justify-center" onClick={() => setShowSidebar(false)}>
+        <div
+          className="pb-5 flex items-center justify-center"
+          onClick={() => setShowSidebar(false)}
+        >
           <Image src={logo} alt="logo" unoptimized className="w-[200px]" />
         </div>
 
         <nav>
-          <ul className="flex flex-col gap-7" onClick={() => setShowSidebar(false)}>
-            <Link href={"/admin/users"} className="flex gap-3 items-center">
+          <ul
+            className="flex flex-col gap-7"
+            onClick={() => setShowSidebar(false)}
+          >
+            {profile.role === "superAdmin" && <Link href={"/admin/users"} className="flex gap-3 items-center">
               <Users />
-              <span>Users</span>
-            </Link>
+              <span>Retention</span>
+            </Link>}
+            
             <Link href={"/admin/leads"} className="flex gap-3 items-center">
               <Boxes />
               <span>Leads</span>
             </Link>
+             {profile.role === "superAdmin" &&  <Link href={"/admin/sales"} className="flex gap-3 items-center">
+              <ShieldUser />
+              <span>Admins</span>
+            </Link>}
+            <li
+              className="flex gap-3 items-center cursor-pointer"
+              onClick={() => handelLogout()}
+            >
+              <X />
+              <span>Logout</span>
+            </li>
             {/* <Link
               href={"/admin/categories"}
               className="flex gap-3 items-center"

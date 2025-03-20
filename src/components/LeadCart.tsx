@@ -14,37 +14,40 @@ import {
 import axios from "axios";
 import { LeadStatus } from "./LeadStatus";
 import { getCookie } from "./ListLeads";
+import { SelectAdmin } from "./SelectAdmin";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export type leadType = {
-    _id: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    country: string;
-    status: string;
-    createdAt: string;
-}
+  _id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  country: string;
+  status: string;
+  createdAt: string;
+  admin? : string
+};
 
 export type leadCartProps = {
   lead: leadType;
   index: number;
-  setRefresh : React.Dispatch<React.SetStateAction<boolean>>
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export default function LeadCart({ lead , setRefresh }: leadCartProps) {
+export default function LeadCart({ lead, setRefresh }: leadCartProps) {
   const [open, setOpen] = useState(false);
 
   const handleDelete = async () => {
     // delete lead from
     try {
-      const token = getCookie("token-001")
-       await axios.delete(`${apiUrl}/leads/${lead._id}`, {
+      const token = getCookie("token-001");
+      await axios.delete(`${apiUrl}/leads/${lead._id}`, {
         headers: { Authorization: `Bearer ${token}` },
- 
-       });
+      });
       console.log("deleted lead successfully");
-      setRefresh((prev) => !prev)
+      setRefresh((prev) => !prev);
       setOpen(false);
     } catch (err) {
       // handle error
@@ -53,6 +56,8 @@ export default function LeadCart({ lead , setRefresh }: leadCartProps) {
 
     // set the state to remove the lead from the cart
   };
+
+  const profile = useSelector((state : RootState) => state.profile)
   return (
     <>
       <TableRow key={lead._id}>
@@ -61,24 +66,30 @@ export default function LeadCart({ lead , setRefresh }: leadCartProps) {
         <TableCell className="hidden md:table-cell">{lead.email}</TableCell>
         <TableCell>{lead.phone}</TableCell>
         <TableCell>{lead.country}</TableCell>
-        <TableCell className="hidden xl:table-cell">{new Date(lead.createdAt).toLocaleDateString()}</TableCell>
-        <TableCell className="hidden md:table-cell">
-            <LeadStatus status={lead.status} leadID={lead._id} setRefresh={setRefresh} />
+        <TableCell className="hidden xl:table-cell">
+          {new Date(lead.createdAt).toLocaleDateString()}
         </TableCell>
-
+        <TableCell className="hidden md:table-cell">
+          <LeadStatus
+            status={lead.status}
+            leadID={lead._id}
+            setRefresh={setRefresh}
+          />
+        </TableCell>
+        {profile.role === "superAdmin" && <TableCell><SelectAdmin sales={lead.admin} leadID={lead._id} setRefresh={setRefresh}  /></TableCell>}
         <TableCell className="item items-center">
-          <div className="grid grid-cols-2 items-center gap-2">
+          <div className="grid grid-cols-1 items-center gap-2">
             <Button
               className="flex items-center gap-1 bg-[#FDD8E0] text-[#F4164F] "
               onClick={() => setOpen(true)}
             >
               <Trash />
-              <span className="hidden xl:block">Delete</span>
+              {/* <span className="hidden xl:block">Delete</span> */}
             </Button>
-            <Button className="flex items-center gap-1 bg-[#94C0FF] text-[#0167F6]">
+            {/* <Button className="flex items-center gap-1 bg-[#94C0FF] text-[#0167F6]">
               <Eye />
               <span className="hidden xl:block">View</span>
-            </Button>
+            </Button> */}
           </div>
         </TableCell>
       </TableRow>

@@ -23,6 +23,8 @@ import LeadCart, { leadType } from "./LeadCart";
 import Pagination from "./Pagination";
 import { Input } from "./ui/input";
 import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -33,11 +35,11 @@ export const getCookie = (name: string) => {
 };
 
 const statusColors: Record<string, string> = {
-  New: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
-  Contacted: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
+  new: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
+  contacted: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
   shipped: "bg-[#F0FBFE] text-[#13BBE1] border-[#13BBE1]",
-  Interested: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
-  cancelled: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
+  fullInformation: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
+  noInformation: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
   all: "bg-main-secondry",
 };
 
@@ -61,6 +63,7 @@ export default function ListLeads() {
   }, [page, router]);
 
   useEffect(() => {
+    console.log("status",status)
     const fetchLeads = async () => {
       try {
         setLoading(true);
@@ -87,7 +90,8 @@ export default function ListLeads() {
     fetchLeads();
   }, [page, refresh, search, status]);
 
-  const statusOptions = ["all", "New", "Contacted", "Interested", "cancelled"];
+  const statusOptions = ["new", "contacted", "fullInformation", "noInformation"];
+  const profile = useSelector((state : RootState) => state.profile)
 
   return (
     <div>
@@ -147,6 +151,7 @@ export default function ListLeads() {
               <TableHead>Country</TableHead>
               <TableHead className="hidden xl:table-cell"> Created_at</TableHead>
               <TableHead className="hidden md:table-cell">Status</TableHead>
+              {profile.role === "superAdmin" && <TableHead className="hidden md:table-cell">Sales Man</TableHead>}
               <TableHead className="">Action</TableHead>
             </TableRow>
           </TableHeader>

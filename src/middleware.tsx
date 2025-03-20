@@ -4,9 +4,10 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Middleware 1: إعادة توجيه من `/` إلى `/dashboard`
-  if (pathname === "/") {
+  if (pathname === "/" ) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
+
 
   // Middleware 2: حماية المسارات التي تبدأ بـ `/admin/:path*`
   if (pathname.startsWith("/admin")) {
@@ -23,5 +24,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*"], // تطبيق Middleware على `/` و `/admin/:path*`
+  matcher: ["/", "/:path" , "/admin/:path*"], // تطبيق Middleware على `/` و `/admin/:path*`
 };

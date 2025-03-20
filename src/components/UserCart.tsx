@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import Link from "next/link";
+import { getCookie } from "./ListLeads";
 
 export type userType = {
   _id: string;
@@ -38,7 +39,10 @@ export default function UserCart({ user, setRefresh }: userCartProps) {
   const handleDelete = async () => {
     // delete user from
     try {
-       await axios.delete(`${apiUrl}/users/${user._id}`);
+      const token = getCookie("token-001");
+       await axios.delete(`${apiUrl}/users/${user._id}` , {
+        headers: { Authorization: `Bearer ${token}` },
+       });
       console.log("deleted user successfully");
       setRefresh((prev) => !prev);
       setOpen(false);
@@ -78,10 +82,10 @@ export default function UserCart({ user, setRefresh }: userCartProps) {
               <Trash />
               
             </Button>
-            <Button className="flex items-center gap-1 bg-[#94C0FF] text-[#0167F6]">
+            {/* <Button className="flex items-center gap-1 bg-[#94C0FF] text-[#0167F6]">
               <Eye />
               
-            </Button>
+            </Button> */}
           </div>
         </TableCell>
       </TableRow>
