@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getCookie } from "@/components/ListLeads";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -83,7 +84,7 @@ export default function CreateAdmin() {
               },
             });
             console.log("Form submitted successfully", response);
-            // toast.success("Lead created successfully");
+            toast.success("Admin created successfully");
           } catch (e) {
             console.error("Error sending form data", e);
             
@@ -93,9 +94,10 @@ export default function CreateAdmin() {
 
   return (
     <div>
+       <ToastContainer />
       <div className=" flex justify-between items-center mb-4 ">
         <div className="flex items-start gap-1 md:gap-2 pb-3 lg:pb-0 ">
-          <Link href={"/admin/leads"} className="border p-2 md:p-3  ">
+          <Link href={"/admin/sales"} className="border p-2 md:p-3  ">
             <ArrowLeft className="h-8 w-8" />
           </Link>
           <div className=" items-center gap-2 mt-[-5px] lg:mt-0 ">
