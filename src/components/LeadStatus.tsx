@@ -11,7 +11,7 @@ import { getCookie } from "./ListLeads";
 
 const statusColors: Record<string, string> = {
   new: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
-  contacted: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
+  interested: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
   shipped: "bg-[#F0FBFE] text-[#13BBE1] border-[#13BBE1]",
   fullInformation: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
   noInformation: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
@@ -28,7 +28,7 @@ export const LeadStatus = ({
   leadID: string;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const statusOptions = ["new", "contacted", "fullInformation", "noInformation"];
+  const statusOptions = ["new", "interested", "fullInformation", "noInformation"];
 
   const handelChangeStatus = async (statusTarget: string) => {
     try {
