@@ -1,7 +1,6 @@
 import ListSales from "@/components/ListeSales";
-import ListUsers from "@/components/ListUsers";
 import { Button } from "@/components/ui/button";
-import { ShieldUser, Users } from "lucide-react";
+import { ShieldUser } from "lucide-react";
 import Link from "next/link";
 import React, { Suspense } from "react";
 

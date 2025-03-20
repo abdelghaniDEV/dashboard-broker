@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { TableCell, TableRow } from "./ui/table";
-import { Edit, Eye, Trash } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
 import {
   Dialog,
   DialogContent,

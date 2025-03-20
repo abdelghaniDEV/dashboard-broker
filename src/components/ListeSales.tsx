@@ -14,7 +14,7 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "./Pagination";
 import { Input } from "./ui/input";
-import { Edit, Search, Trash } from "lucide-react";
+import { Search, Trash } from "lucide-react";
 import { Button } from "./ui/button";
 import { getCookie } from "./ListLeads";
 
@@ -31,7 +31,7 @@ export default function ListSales() {
   const [totalPages, setTotalPages] = useState(0);
   const [carentPage, setCarentPage] = useState(0);
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all"); //
+
 
   const router = useRouter();
 
@@ -68,7 +68,7 @@ export default function ListSales() {
       }
     };
     fetchadmins();
-  }, [page, refresh, search, status]);
+  }, [page, refresh, search]);
 
   const handeleDelete = async (id : string) => {
     console.log(id)

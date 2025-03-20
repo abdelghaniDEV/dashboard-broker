@@ -11,13 +11,6 @@ import axios from "axios";
 import { getCookie } from "./ListLeads";
 import { useEffect, useState } from "react";
 
-const statusColors: Record<string, string> = {
-  New: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
-  Contacted: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
-  shipped: "bg-[#F0FBFE] text-[#13BBE1] border-[#13BBE1]",
-  Interested: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
-  cancelled: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
-};
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,7 +23,6 @@ export const SelectAdmin = ({
   leadID: string;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const statusOptions = ["New", "Contacted", "Interested", "cancelled"];
   const [admins, setAdmins] = useState([]);
 
   useEffect(() => {
