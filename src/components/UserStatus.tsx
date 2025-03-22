@@ -12,6 +12,7 @@ import { getCookie } from "./ListLeads";
 const statusColors: Record<string, string> = {
   new: "bg-[#F7E5CC] text-[#F2800D] border-[#F2800D]",
   interested: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
+  FTD : "bg-black text-white border-white",
   shipped: "bg-[#F0FBFE] text-[#13BBE1] border-[#13BBE1]",
   fullInformation: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
   noInterested: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
@@ -19,22 +20,22 @@ const statusColors: Record<string, string> = {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export const LeadStatus = ({
+export const UserStatus = ({
   status,
-  leadID,
+  userID,
   setRefresh,
 }: {
   status: string;
-  leadID: string;
+  userID: string;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const statusOptions = ["new", "interested", "fullInformation", "noInterested"];
+  const statusOptions = ["new", "FTD" , "interested", "fullInformation", "noInterested" , ];
 
   const handelChangeStatus = async (statusTarget: string) => {
     try {
       const token = getCookie("token-001")
       const response = await axios.put(
-        `${apiUrl}/leads/${leadID}/status`,
+        `${apiUrl}/users/${userID}/status`,
         { status: statusTarget }, {
           headers: {
             Authorization: `Bearer ${token}`,

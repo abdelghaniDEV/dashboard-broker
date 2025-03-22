@@ -39,7 +39,7 @@ const statusColors: Record<string, string> = {
   interested: "bg-[#E6EAFB] text-[#204FC9] border-[#204FC9]",
   shipped: "bg-[#F0FBFE] text-[#13BBE1] border-[#13BBE1]",
   fullInformation: "bg-[#F0FBF4] text-[#13B458] border-[#13B458]",
-  noInformation: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
+  noInterested: "bg-[#FCF0EF] text-[#EA6B6D] border-[#EA6B6D]",
   all: "bg-main-secondry",
 };
 
@@ -99,7 +99,7 @@ export default function ListLeads() {
     "new",
     "interested",
     "fullInformation",
-    "noInformation",
+    "noInterested",
   ];
   const profile = useSelector((state: RootState) => state.profile);
 
