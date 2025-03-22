@@ -15,7 +15,6 @@ import axios from "axios";
 import Link from "next/link";
 import { getCookie } from "./ListLeads";
 import { UserStatus } from "./UserStatus";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 export type userType = {
